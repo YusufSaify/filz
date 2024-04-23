@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/javascripts/script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home page </title>
+</head>
+
+<body onload="load()">
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <h1>FILZ</h1>
+        </div>
+        <button onclick="changemod()" class="mode"><img src="/images/brightness.png" alt=""></button>
+        <div class="navbar-search">
+            <input type="text" placeholder="Search...">
+            <button type="submit">Search</button>
+
+        </div>
+    </nav>
+    <div class="main" id="main">
+
+        <div class="form">
+            <form id="noteForm" action="/create" method="post">
+                <input type="text" name="dirname" placeholder="/" value="<%= filename==" " ? ''  : filename  %>">
+                <input type="text" name="filename" placeholder="Home">
+
+                <textarea name="filecontent" id="" cols="30" rows="10" placeholder="write text.."></textarea>
+                <input class="red" type="submit" value="Add note">
+
+            </form>
+        </div>
+
+
+
+    </div>
+    </div>
+    <button onclick="goto()">go back</button>
+
+    <div class="files">
+        <% if(files.length> 0) { %>
+            <% files.forEach(function(val) { %>
+                <div class="file">
+                    <div class="note">
+                        <img src="/images/note3.png" alt="">
+                    </div>
+                    <div class="text">
+                        <h1>
+                            <a href="/read/<%= filename==" " ? val  : filename + '/' + val %>">
+
+                                <%= val %>
+                            </a>
+                        </h1>
+                    </div>
+                </div>
+                <% }); %>
+                    <% } else { %>
+                        <p class=msg>No files found yet</p>
+                        <% } %>
+    </div>
+
+
+    </div>
+
+</body>
+
+</html>
+<script>
+    async function isDirectory(path) {
+        fetch(`/getFileType?path=${encodeURIComponent(path)}`)
+            .then(response => response.json())
+            .then(data => {
+                const fileElement = document.querySelector(`[data-path="${path}"]`);
+                if (fileElement) {
+                    fileElement.src = `/images/${data.fileType}.png`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+
+
+    const mainElement = document.getElementById('main');
+
+    // Load position from local storage only if not already set
+    if (mainElement.style.left && mainElement.style.top) {
+        const storedX = localStorage.getItem('mainX');
+        const storedY = localStorage.getItem('mainY');
+        if (storedX !== null && storedY !== null) {
+            mainElement.style.left = storedX + 'px';
+            mainElement.style.top = storedY + 'px';
+        }
+    }
+
+    // mainElement.style.left=offsetX;
+    // mainElement.style.right=offsetY;
+
+    function load() {
+        offsetX = localStorage.getItem('mainX') ||10 ;
+        offsetY = localStorage.getItem('mainY') || 10;
+        mainElement.style.left = offsetX + 'px';
+        mainElement.style.top = offsetY + 'px';
+    }
+
+    let offsetX = localStorage.getItem('mainX');
+    let offsetY = localStorage.getItem('mainY');
+    let isDragging = false;
+
+    mainElement.addEventListener('mousedown', startDrag);
+    mainElement.addEventListener('mouseup', endDrag);
+    mainElement.addEventListener('mouseleave', endDrag);
+    mainElement.addEventListener('mousemove', drag);
+
+    function startDrag(e) {
+        console.log("start")
+        isDragging = true;
+        offsetX = e.clientX - mainElement.getBoundingClientRect().left;
+        offsetY = e.clientY - mainElement.getBoundingClientRect().top;
+    }
+
+    function endDrag() {
+     
+        isDragging = false;
+        // Save position to local storage
+        savePosition();
+    }
+
+    function drag(e) {
+        if (isDragging) {
+            const newX = e.clientX - offsetX;
+            const newY = e.clientY - offsetY;
+            mainElement.style.left = newX + 'px';
+            mainElement.style.top = newY + 'px';
+        }
+    }
+
+    // Save position to local storage
+    function savePosition() {
+        localStorage.setItem('mainX', mainElement.style.left);
+        localStorage.setItem('mainY', mainElement.style.top);
+    }
+
+    // Save position when the page is unloaded
+    window.addEventListener('beforereload', savePosition);
+
+</script>
+
+
+
+</script>

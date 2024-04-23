@@ -1,0 +1,43 @@
+body {
+    background-color: #e0e5ec;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+a:hover {
+    transform: scale(1.05);
+}
+
+.file-container {
+    background-color: #dde5f2;
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px #c0c8d6, -10px -10px 20px #ffffff;
+    padding: 20px;
+}
+
+.file-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.file-content {
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #666;
+}

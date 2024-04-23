@@ -1,0 +1,354 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--clr1);
+    /* background: url('public/images/background.jpg'); */
+    color: #f3e6dd;
+    overflow: hidden;
+
+}
+
+.files {
+    /* background-color: #f3e6dd; */
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.file {
+    width: 300px;
+    /* background-color: red; */
+    padding: 10px;
+    margin: 10px;
+}
+
+
+.form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.form form {
+    /* background-color: #ff0000; */
+    padding: 20px;
+    border-radius: 10px;
+    height: 400px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form input[type="text"],
+.form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.form input[type="submit"] {
+    /* background-color: var(--clr2); */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+    border: 2px solid var(--clr2);
+
+    background: #f25664;
+    font-size: 16px;
+}
+
+.form input[type="submit"]:hover {
+    background-color: var(--clr2);
+    /* border: 2px solid var(--clr2); */
+}
+
+/* Card container */
+.file {
+    /* background-color: #fff; */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    /* margin-bottom: 20px; */
+}
+
+/* Title */
+.file h1 {
+    font-size: 20px;
+    color: #333;
+    /* margin-bottom: 10px; */
+}
+
+/* Link */
+.file a {
+    /* color: #4CAF50; */
+    color: rgb(54, 54, 54);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.file a:hover {
+    color: rgb(172, 15, 15);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Form styles */
+.form form {
+    background-color: #e6e6e65f;
+    border-radius: 12px;
+    border: 2px solid rgba(0, 0, 0, 0.101);
+    padding: 20px;
+    /* margin-top: 30px; */
+    backdrop-filter: blur(3px);
+    /* background-color: blue; */
+
+}
+
+.form input[type="text"],
+.form textarea {
+    color: black;
+
+    width: 100%;
+    padding: 10px;
+    resize: none;
+    margin-bottom: 10px;
+    /* border:2px solid  rgba(0, 0, 0, 0.101); */
+    border: 2px solid rgba(0, 0, 0, 0.101);
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* d87355 */
+.form input[type="submit"] {
+    /* background-color: var(--clr2); */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+
+    cursor: pointer;
+    font-size: 16px;
+}
+
+textarea,
+input[type="text"] {
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.399);
+    outline: none;
+    font-family: 'Times New Roman', Times, serif;
+    border: 2px solid rgba(0, 0, 0, 0.101);
+
+}
+
+input[type="text"] {
+    font-style: italic;
+}
+
+.reset button {
+    background-color: var(--clr2);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    width: 100%;
+    margin: 10px 0px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* .form input[type="submit"]:hover {
+    background-color: var(--clr2);
+} */
+
+* {
+    overflow-x: hidden;
+}
+
+/* File card styles */
+.files {
+    padding: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100vw - 80px);
+    align-items: center;
+    justify-content: center;
+}
+
+.file {
+    align-items: center;
+    /* position: relative; */
+    background-color: transparent;
+    border-radius: 8px;
+    box-shadow: none;
+    cursor: pointer;
+    color: #333;
+    width: 250px;
+    position: relative;
+    padding: 20px;
+    display: flex;
+    overflow: hidden;
+    justify-content: space-between;
+}
+
+.mode img {
+    cursor: pointer;
+    width: 30px;
+    filter: invert(1);
+}
+
+
+.mode {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    transition: 1s;
+}
+
+
+
+
+
+
+.note img {
+    width: 100%;
+    filter: saturate(0.4) brightness(1.3);
+    transition: color 1s;
+
+}
+
+
+.note img:hover {
+    /* filter: drop-shadow(-3px 4px 1px rgb(139, 139, 139));
+     */
+
+}
+
+
+.text {
+    position: absolute;
+    left: 20%;
+    top: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: auto;
+}
+
+/* .file:hover {
+    background-color: #b26046;
+    filter: invert(1);
+}
+.file:hover.file h1{
+    color: white;
+} */
+
+.file h1 {
+    font-size: 30px;
+    z-index: 1;
+    color: #80675d;
+    font-family: "Caveat", cursive;
+    font-optical-sizing: auto;
+    padding: 5px;
+    margin-right: 10px;
+}
+.msg{
+    color: red;
+}
+
+
+.main {
+    display: flex;
+    /* width: 100vw; */
+    /* padding: 40px; */
+    border-bottom: 2px solid var(--clr1);
+    position: absolute;
+    /* top: 0;
+    left: 0; */
+    z-index: 1000;
+    /* Ensure it's above other elements */
+    cursor: move;
+    /* background-color: red; */
+}
+
+:root {
+    --clr1: #f4f3f7;
+    --clr2: #212431;
+}
+
+.user {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    font-size: 60px;
+    /* background-color: blue; */
+}
+
+.user img {
+    height: 440px;
+    filter: saturate(0);
+    border-radius: 12px;
+    /* mix-blend-mode: darken; */
+}
+
+.navbar {
+    background-color: var(--clr2);
+    padding: 10px;
+    display: flex;
+    height: 65px;
+    overflow: hidden;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-logo h1 {
+    color: #f3e6dd;
+    font-size: 30px;
+    letter-spacing: 6px;
+    margin-left: 40px;
+
+}
+
+.navbar-search input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    border-radius: 5px;
+    width: 200px;
+
+}
+
+.navbar-search button {
+    margin: 5px 0px;
+    margin-right: 40px;
+    margin-left: 10px;
+    padding: 10px 15px;
+    background-color: #f25664;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0px 0px #933a41;
+}
+
+.navbar-search button:hover {
+    background-color: #cf5a64;
+}
+
+.a img {
+    width: 25px;
+    opacity: .3;
+}

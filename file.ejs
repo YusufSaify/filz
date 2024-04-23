@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Viewer</title>
+    <style>
+        /* Define CSS variables */
+        :root {
+            --clr1: #dedede;
+            --clr2: #a987c0;
+        }
+
+        /* Reset default styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Search bar styling */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            color: #fff;
+            background: var(--clr2);
+            height: 50px;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 12px 15px;
+            font-size: 20px;
+            border: none;
+            border-radius: 500px;
+            background: linear-gradient(to right, white, var(--clr2));
+            outline: none;
+            width: 300px;
+        }
+
+        .search-bar button {
+            width: 80px;
+            height: 50px;
+            background-color: var(--clr2);
+            color: #fff;
+            border: none;
+            border-radius: 500px;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .search-bar img {
+            width: 20px;
+            filter: invert(1)
+        }
+
+        /* Filename display styling */
+        .filename {
+            /* background-color: red; */
+            text-align: center;
+            text-transform: capitalize;
+            /* background-color: rgb(135, 135, 135); */
+            padding: 0px 15px;
+            border-left: 4px solid rgb(255, 255, 255);
+            font-size: 24px;
+        }
+
+        /* Container for sidebar and content */
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0px 50px;
+            background: linear-gradient(to bottom, white, var(--clr2));
+            height: calc(100vh - 80px);
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 40px;
+            padding: 0px 20px;
+            height: calc(100vh - 100px);
+            background-color: rgba(255, 255, 255, 0.209);
+            backdrop-filter: blur(2px);
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.099);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border-radius: 20px;
+            margin-right: 20px;
+        }
+
+        /* Content styling */
+        .content {
+            width: 600px;
+            height: calc(100vh - 100px);
+        }
+
+        /* Textarea styling */
+        textarea {
+            width: calc(100% - 20px);
+            height: calc(100% - 20px);
+            padding: 10px;
+            font-size: 20px;
+            border-radius: 20px;
+            border: none;
+            resize: none;
+            font-family: "Caveat", cursive;
+            outline: none;
+            font-size: 30px;
+            box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.099);
+        }
+
+        /* Button styling */
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            padding: 8px 15px;
+            border: 1px solid var(--clr2);
+            border-radius: 10px;
+            cursor: pointer;
+            background-color: transparent;
+            opacity: .7;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .btn img {
+            width: 24px;
+            opacity: .5;
+        }
+
+        .btn:hover {
+            box-shadow: 0px 0px 4px rgba(78, 78, 78, 0.185);
+            opacity: 1;
+            background-color: var(--clr2);
+
+        }
+
+        .btn:hover.btn img {
+            filter: invert(1);
+            opacity: 1;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Search bar -->
+    <div class="search-bar">
+        <div class="filename">
+            <%=filename%>
+        </div>
+        <div class="">
+
+            <input type="text" placeholder="Search...">
+            <button type="submit" class=""><img src="/images/loupe.png" alt=""></button>
+        </div>
+    </div>
+
+    <!-- Filename display -->
+
+    <!-- Container for sidebar and content -->
+    <div class="container">
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <button class="btn"><img src="/images/save.png" alt=""></button>
+            <button class="btn" onclick="deleteFile(`<%= filename %>`)"><img src="/images/trash.png" alt=""></button>
+            <button class="btn"><img src="/images/share2.png" alt=""></button>
+            <button class="btn" onclick="rename(`<%= filename %>`)"><img src="/images/pencil.png" alt=""></button>
+            <button class="btn" onclick="gohome()"><img src="/images/back.png" alt=""></button>
+        </div>
+
+        <!-- Content area -->
+        <div class="content">
+            <textarea spellcheck="false" placeholder="File content will be displayed here...">
+                <%=file%>
+            </textarea>
+        </div>
+    </div>
+
+    <!-- JavaScript functions -->
+    <script>
+        function rename(oldname) {
+            const newFilename = prompt('Enter the new filename:');
+            if (newFilename) {
+                fetch(`/rename/${oldname}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ newFilename }),
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to rename file');
+                        }
+                        window.location.href = `/read/${newFilename}`;
+                    })
+                    .catch(error => {
+                        console.error('Error renaming file:', error);
+                    });
+            }
+        }
+
+        function deleteFile(filename) {
+            if (confirm('Are you sure you want to delete this file?')) {
+                fetch(`/delete/${filename}`, {
+                    method: 'DELETE',
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Failed to delete file');
+                        }
+                        window.location.href = '/';
+                    })
+                    .catch(error => {
+                        console.error('Error deleting file:', error);
+                        window.location.href = '/';
+                    });
+            }
+        }
+
+        function gohome() {
+            const url = window.location.href;
+            const trimmedUrl = url.substring(0, url.lastIndexOf("/"));
+            window.location.href = `${trimmedUrl}`;
+        }
+    </script>
+</body>
+
+</html>
